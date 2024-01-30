@@ -1,3 +1,4 @@
-import movieColection from "./date/movies.js";
+import app from "./functions/function.js";
 
-console.log(movieColection)
+const movie = app.randomMovie();
+console.log(movie);
