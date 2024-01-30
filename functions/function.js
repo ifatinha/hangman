@@ -20,8 +20,6 @@ function game(film, hiddenFilme) {
     for (let i = 0; i < arrayFilm.length; i++) {
         let letra = scanner.question("Digite uma letra: ");
 
-
-
         if (chances > 0) {
             console.log(`Boa sorte! Você tem ${chances}.`);
 
