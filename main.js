@@ -1,4 +1,3 @@
-import colecao_filmes from "./date/movies.js";
+import movieColection from "./date/movies.js";
 
-const filmes = colecao_filmes;
-console.log(filmes)
+console.log(movieColection)
