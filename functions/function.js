@@ -11,6 +11,56 @@ function hideFilm(film) {
     return hiddenMovie.split("");
 }
 
+function checksIfTheLetterExistsInTheName(letra, arr) {
+    return arr.find((letter) => {
+        return letter.toLowerCase() === letra.toLowerCase();
+    })
+}
+
+function replacesSpaces(film, hiddenFilme) {
+    film.forEach((letter, index) => {
+        if (letter === " ") {
+            hiddenFilme[index] = " ";
+        }
+    })
+
+    return hiddenFilme;
+}
+
+function replaceLetter(filme, letra, hiddenFilme) {
+    filme.forEach((letter, index) => {
+        if (letter.toLowerCase() === letra.toLowerCase()) {
+            hiddenFilme[index] = letra;
+        }
+    })
+
+    return hiddenFilme;
+}
+
+function updateChances(chances) {
+    chances--;
+    if (chances === 0) {
+        console.log("Suas chances acabaram! VOCÊ PERDEU!!!!");
+    } else {
+        console.log(`OPÇÃO ERRADA! Você ainda tem ${chances} chance(s).`);
+    }
+
+    return chances;
+}
+
+function checkIfYouWon(arrayFilm, hiddenFilme) {
+    if (hiddenFilme.join("").toLowerCase() === arrayFilm.join("").toLowerCase()) {
+        console.clear();
+        console.log("Parabéns!!! Você acertou");
+        console.log(`SUA RESPOSTA: ${hiddenFilme.join("")}`);
+        console.log(`RESPOSTA: ${arrayFilm.join("")}`);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 function game(film, hiddenFilme) {
     let chances = 4;
     let won = false;
@@ -21,42 +71,19 @@ function game(film, hiddenFilme) {
 
     do {
 
+        hiddenFilme = replacesSpaces(arrayFilm, hiddenFilme);
         console.log("Filme: " + hiddenFilme.join(""));
         let letra = scanner.question("Digite uma letra: ");
 
-        const achou = arrayFilm.find((letter) => {
-            return letter.toLowerCase() === letra.toLowerCase();
-        })
-
-        arrayFilm.forEach((letter, index) => {
-            if (letter === " ") {
-                hiddenFilme[index] = " ";
-            }
-        })
+        const achou = checksIfTheLetterExistsInTheName(letra, arrayFilm);
 
         if (achou !== undefined) {
-            arrayFilm.forEach((letter, index) => {
-                if (letter.toLowerCase() === letra.toLowerCase()) {
-                    hiddenFilme[index] = letra;
-                }
-            })
+            hiddenFilme = replaceLetter(arrayFilm, letra, hiddenFilme);
         } else {
-            chances--;
-            if (chances === 0) {
-                console.log("Suas chances acabaram! VOCÊ PERDEU!!!!");
-                won = true;
-            } else {
-                console.log(`OPÇÃO ERRADA! Você ainda tem ${chances} chance(s).`);
-            }
+            chances = updateChances(chances);
         }
 
-        if (hiddenFilme.join("").toLowerCase() === arrayFilm.join("").toLowerCase()) {
-            console.clear();
-            console.log("Parabéns!!! Você acertou");
-            console.log(`SUA RESPOSTA: ${hiddenFilme.join("").toCapitalize()}`);
-            console.log(`RESPOSTA: ${arrayFilm.join("")}`);
-            won = true;
-        }
+        won = checkIfYouWon(arrayFilm, hiddenFilme);
 
     } while (chances > 0 && won === false);
 }
